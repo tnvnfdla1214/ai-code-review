@@ -7,7 +7,8 @@
 
 ## **📌 1. 사용 방법**  
 ### ✅ **1.1 GitHub Actions 워크플로우 추가 (사용하는 레포지토리)**
-🔹 **프로젝트의 `.github/workflows/code-review.yml` 파일을 생성하고 아래 내용을 추가하세요.**  
+🔹 **프로젝트의 `.github/workflows/code-review.yml` 파일을 생성하고 아래 내용을 추가하세요.**
+(깃허브 Add file 로 만드시면 편합니다!)
 
 ```yaml
 name: Code Review with Google Gemini
