@@ -1,0 +1,38 @@
+name: Reusable Code Review with Google Gemini
+
+on:
+  workflow_call:
+    inputs:
+      google_api_key:
+        required: true
+        type: string
+      github_token:
+        required: true
+        type: string
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ inputs.github_token }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install google-generativeai requests
+
+      - name: Run code review script
+        run: python .github/workflows/review_gemini.py
+        env:
+          GOOGLE_API_KEY: ${{ inputs.google_api_key }}
+          GITHUB_TOKEN: ${{ inputs.github_token }}
