@@ -5,7 +5,7 @@ on:
     secrets:
       google_api_key:
         required: true
-      github_token:
+      gh_pat:
         required: true
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.github_token }}
+          token: ${{ secrets.gh_pat }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -33,5 +33,5 @@ jobs:
         run: python .github/workflows/review_gemini.py
         env:
           GOOGLE_API_KEY: ${{ secrets.google_api_key }}
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+          GITHUB_TOKEN: ${{ secrets.gh_pat }}
 
