@@ -1,12 +1,19 @@
-name: Reusable Code Review with Google Gemini
+name: Reusable Code Review with AI
 
 on:
   workflow_call:
     secrets:
       google_api_key:
-        required: true
+        required: false
+      openai_api_key:
+        required: false
       gh_pat:
         required: true
+    inputs:
+      model_provider:
+        required: true
+        type: string
+        default: "gemini"
 
 permissions:
   contents: read
@@ -29,10 +36,18 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install google-generativeai requests
+        run: pip install google-generativeai requests openai
 
-      - name: Run code review script
+      - name: Run Gemini Code Review (if selected)
+        if: inputs.model_provider == 'gemini'
         run: python .github/workflows/review_gemini.py
         env:
           GOOGLE_API_KEY: ${{ secrets.google_api_key }}
+          GITHUB_TOKEN: ${{ secrets.gh_pat }}
+
+      - name: Run GPT Code Review (if selected)
+        if: inputs.model_provider == 'gpt'
+        run: python .github/workflows/review_gpt.py
+        env:
+          OPENAI_API_KEY: ${{ secrets.openai_api_key }}
           GITHUB_TOKEN: ${{ secrets.gh_pat }}
