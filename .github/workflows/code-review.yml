@@ -4,23 +4,9 @@ on:
   workflow_call:
     secrets:
       google_api_key:
-        required: false
-      openai_api_key:
-        required: false
+        required: true
       gh_pat:
         required: true
-
-    inputs:
-      ai_model:
-        description: "AI 모델 선택 (gemini 또는 gpt)"
-        required: false
-        default: "gemini"
-        type: string
-      ai_model_version:
-        description: "사용할 AI 모델 버전 (예: gemini-2.0-flash, gpt-4)"
-        required: false
-        default: "gemini-2.0-flash"
-        type: string
 
 permissions:
   contents: read
@@ -43,13 +29,10 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install google-generativeai openai requests
+        run: pip install google-generativeai requests
 
       - name: Run code review script
-        run: python .github/workflows/review_ai.py
+        run: python .github/workflows/review_gemini.py
         env:
           GOOGLE_API_KEY: ${{ secrets.google_api_key }}
-          OPENAI_API_KEY: ${{ secrets.openai_api_key }}
           GITHUB_TOKEN: ${{ secrets.gh_pat }}
-          AI_MODEL: ${{ inputs.ai_model }}
-          AI_MODEL_VERSION: ${{ inputs.ai_model_version }}
