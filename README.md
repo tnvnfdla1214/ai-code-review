@@ -52,6 +52,7 @@ jobs:
 ```
 ### ✅ 1.2 GitHub Secrets 설정 방법
 🔹 **사용하려면 Settings → Secrets and variables → Actions → New repository secret 에서 아래 두 개의 Secrets를 추가하세요.**
+- [Google AI Studio](https://ai.google.dev/gemini-api/docs/api-key?hl=ko) 
 
 |Secret Name|설명|
 |------|---|
